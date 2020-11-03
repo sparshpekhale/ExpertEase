@@ -4,10 +4,18 @@ import ProfileItem from './ProfileItem';
 import  '../components/ProfileList.css'
 function ProfileList(props)
 {
+    const data=(props.items);
+    
     
     return(
         <ul className="place-list">
-            {props.items.map(info => <ProfileItem key={info.id} id={info.id}image={info.imageUrl} title={info.title} description={info.description} address={info.address} creatorId={info.cretor}  works={info.works}/>)}
+            <ProfileItem key={data.id} 
+        id={data.id}
+        title={data.name}
+        descirption={data.description}
+          works={data.works} 
+           university={data.university}
+           image={data.image}/>
         </ul>
     );
 

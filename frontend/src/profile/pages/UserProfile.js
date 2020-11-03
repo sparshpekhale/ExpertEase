@@ -1,47 +1,37 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import PlaceList from '../components/ProfileList';
 import shrey from './shrey.jpg';
 import palak from './palak.jpeg'
 import sparsh from './sparsh.jpeg'
-import {useParams, usePrams} from 'react-router-dom';
-const DUMMY_PLACE=[
-    {
-        id:'p1',
-        title:'Shrey Agrawal',
-        imageUrl:shrey,
-        descirption :'Engineer/Web developer',
-        University:'Bennett University',
-        works:'working on project experease ',
-        address:'Sundar street,chandausi',
-        creator:'u1'
-       },
-       {
-        id:'p2',
-        title:'palak kanongoo',
-        imageUrl:palak,
-        descirption :'Engineer/Web developer',
-        University:'Bennett University',
-        works:'working on project experease ',
-        address:'India',
-        creator:'u2'
-       },
-       {
-        id:'p3',
-        title:'Sparsh Pekhele',
-        imageUrl:sparsh,
-        descirption :'Engineer/Web developer',
-        University:'Bennett University',
-        works:'working on project experease ',
-        address:'nasik',
-        creator:'u3'
-       }
-];
+import {useParams} from 'react-router-dom';
+import {useHttpClient} from '../../shared/hooks/http-hook';
+import ErrorModal from '../../shared/components/UIElement/ErrorModal';
+/* eslint-disable */
 function UserProfile()
-{
+{const [loadedPlaces,setLoadedPlaces]=useState();
+    const {isLoading,error,sendRequest,clearError}=useHttpClient();
+    // eslint-disable-next-line
     const userId=useParams().userId;
-    const loadedPlaces=DUMMY_PLACE.filter(place=> place.creator===userId)
-
-    return <PlaceList items={loadedPlaces}/>;
+    useEffect(() => {
+        const fetchPlaces = async () => {
+          try {
+            const responseData = await sendRequest(
+              process.env.REACT_APP_BACKEND_URL+`/profile/${userId}`
+            );
+            
+            setLoadedPlaces(responseData.profile);
+          } catch (err) {}
+        };
+        fetchPlaces();
+      }, [sendRequest, userId]);
+      
+      //const obj=JSON.parse('loadedPlaces');
+      //console.log(JSON.parse(`${loadedPlaces}`));
+    return (
+        <React.Fragment>
+            <ErrorModal error={error} onClear={clearError}/>
+   {loadedPlaces&&  <PlaceList items={loadedPlaces}/>}
+    </React.Fragment>);
 
 }
 export default UserProfile;

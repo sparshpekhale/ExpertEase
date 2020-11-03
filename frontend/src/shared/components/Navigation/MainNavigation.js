@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import MainHeader from './MainHeader';
 import {Link} from 'react-router-dom';
-import name from './name.PNG';
+import name from './logo.png';
 import './MainNavigation.css';
 import NavLinks from './NavLinks';
 import SideDrawer from './SideDrawer';
@@ -34,7 +34,7 @@ function MainNavigation()
                 <span/>
             </button>
             <h1 className="main-navigatin__title">
-                <Link to="/" exact><img id="title" src={name} alt="" /></Link>
+                <Link to="/" ><img id="title" src={name} alt="" /></Link>
             </h1>
             <nav className="main-navigation__header-nav">
                 <NavLinks />

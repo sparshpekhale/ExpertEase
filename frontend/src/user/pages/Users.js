@@ -1,26 +1,46 @@
-import React from 'react'
+import React ,{useEffect,useState}from 'react';
 import UsersList from '../components/UsersList.js'
-import shrey from './shrey.jpg'
-import palak from './palak.jpeg';
-import sparsh from './sparsh.jpeg'
+
+import ErrorModal from '../../shared/components/UIElement/ErrorModal.js';
+import LoadingSpinner from '../../shared/components/UIElement/LoadingSpinner.js';
+import { useHttpClient } from '../../shared/hooks/http-hook.js';
+import './Users.css'
 //import {NavLink} from 'react-router-dom';
+import Search from './Search'
 function Users()
 {
-    const Users=[{id:'u1' ,
-    image : shrey,
-    university: 'Bennett University',
-    name : 'shrey agrawal' },
-    {id:'u2' ,
-    image : palak,
-    university: 'Bennett University',
-    name : 'palak kanongoo' },
-    {id:'u3' ,
-    image : sparsh,
-    university: 'Bennett University',
-    name : 'sparsh pekhele' }];
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [loadedUsers, setLoadedUsers] = useState();
+  
 
-    return(
-    <UsersList items={Users}/>
-    );
-}
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const responseData = await sendRequest(
+          process.env.REACT_APP_BACKEND_URL+'/users'
+        );
+         const array=responseData.users;
+         console.log(array)
+        setLoadedUsers(array);
+       
+      } catch (err) {}
+    };
+    fetchUsers();
+  }, [sendRequest]);
+ 
+  
+  return (
+    <React.Fragment>
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner />
+        </div>
+      )}
+      
+      {!isLoading && loadedUsers && <Search items={loadedUsers} />}
+    </React.Fragment>
+  );
+  }
+
 export default Users;

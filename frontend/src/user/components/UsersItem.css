@@ -2,6 +2,7 @@
   margin: 1rem;
   width: calc(45% - 2rem);
   min-width: 17.5rem;
+  
 }
 
 .user-item a {
@@ -14,15 +15,25 @@
   color: white;
   background: #292929;
   
+  
+}
+.verified{
+  height: 20px;
+  width: 20px;
+  margin-left: 20px;
 }
 
 .user-item a:hover,
 .user-item a:active {
   background: #ffd900;
 }
+button:hover{
+  background-color:black;
+}
 
 .user-item__content {
   padding: 0;
+  box-sizing: border-box;
   
 }
 
@@ -39,6 +50,7 @@
   margin: 0 0 0.5rem 10px;
   font-weight: normal;
   color: #ffd900;
+  display: inline-block;
 }
 
 .user-item:hover h2,

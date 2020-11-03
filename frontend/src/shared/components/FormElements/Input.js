@@ -1,4 +1,4 @@
-import React,{useReducer} from 'react';
+import React,{useReducer,useEffect} from 'react';
 import './Input.css';
 import {validate} from '../util/validators'
 const inputReducer =(state ,action)=>
@@ -19,16 +19,29 @@ const inputReducer =(state ,action)=>
 
     }
 }
-
+/* eslint-disable */
 
 function Input(props)
-{  const [inputState,dispatch]=useReducer(inputReducer,{value:'',isValid:false,isTouched:false});
+{  const [inputState,dispatch]=useReducer(inputReducer,
+                            {value:props.value || '',
+                            isValid:props.valid || false,
+                            isTouched:props.valid || false});
+
     const changeHandler =event =>{
         dispatch({type:'CHANGE' , val: event.target.value, validators:props.validators});
     }
+
     const onTouchHandler=()=>{
             dispatch({type:'TOUCH' })
     }
+
+    const {id,onInput}=props;
+    const{value,isValid}=inputState;
+    useEffect(() => {
+        
+        props.onInput( id,value, isValid )
+        
+    }, [id,value,isValid,onInput]);
 
     const element=props.element ==='input' ? <input id={props.id} 
                                                 type={props.type} 
@@ -41,7 +54,7 @@ function Input(props)
                                             rows={props.rows || 3}
                                             onChange={changeHandler}
                                                 value={inputState.value} 
-                                                onBLur={onTouchHandler}/>
+                                                onBlur={onTouchHandler}/>
     return(
         <div className={`form-control ${!inputState.isValid &&  inputState.isTouched && 'form-control--invalid'}`}>
             <label htmlFor={props.id}>{props.label}</label>

@@ -1,50 +1,68 @@
-import React from 'react'
-import {useParams} from 'react-router-dom';
+import React ,{useCallback,useState,useEffect,useContext,useRef}from 'react'
+import {useParams,useHistory} from 'react-router-dom';
+import Button from '../../shared/components/FormElements/Button';
 import Input from '../../shared/components/FormElements/Input';
 import { VALIDATOR_MAXLENGTH, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/components/util/validators';
 import './UpdateProfile.css';
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
+import ErrorModal from '../../shared/components/UIElement/ErrorModal';
+import Card from '../../shared/components/UIElement/Card';
+import LoadingSpinner from '../../shared/components/UIElement/LoadingSpinner';
+import ImageUpload from '../../shared/components/FormElements/ImageUpload';
+import Update from '../components/Update';
+
 function UpdateProfile()
 {
-    const DUMMY_PLACE=[
-        {
-            id:'p1',
-            title:'Shrey Agrawal',
-           // imageUrl:shrey,
-            descirption :'Engineer/Web developer',
-            University:'Bennett University',
-            works:'working on project experease ',
-            address:'Sundar street,chandausi',
-            creator:'u1'
-           },
-           {
-            id:'p2',
-            title:'palak kanongoo',
-           // imageUrl:palak,
-            descirption :'Engineer/Web developer',
-            University:'Bennett University',
-            works:'working on project experease ',
-            address:'India',
-            creator:'u2'
-           },
-           {
-            id:'p3',
-            title:'Sparsh Pekhele',
-           // imageUrl:sparsh,
-            descirption :'Engineer/Web developer',
-            University:'Bennett University',
-            works:'working on project experease ',
-            address:'nasik',
-            creator:'u3'
-           }
-    ];
-    const profileId=useParams().profileId;
-    const identifiedProfile=DUMMY_PLACE.find(p => p.id===profileId);
-        return(<form className="place-form">
+        
+   //const about=useRef(null);
+    const auth = useContext(AuthContext);
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
+    const [loadedPlace, setLoadedPlace] = useState();
+    const profileId = useParams().profileId;
+    
+    
+    useEffect(() => {
+        const fetchPlace = async () => {
+          try {
+          
+            const responseData = await sendRequest(
+              process.env.REACT_APP_BACKEND_URL+`/profile/${profileId}`
+            );
+            setLoadedPlace(responseData.profile);
             
-                    <Input id="title" element="input" type="text" label="Title" validators={[VALIDATOR_REQUIRE(),VALIDATOR_MINLENGTH(3)]}
-                     errorText="Please enter a valid text"/>
-                    </form>
-            
+    
+          } catch (err) {}
+        };
+        fetchPlace();
+      }, [sendRequest,profileId]);
+      
+    //console.log(inputs);
+    
+    
+    
+    
+    
+    
+    if (isLoading) {
+        return (
+          <div className="center">
+            <LoadingSpinner />
+          </div>
         );
+      }
+    
+      if (!loadedPlace && !error) {
+        return (
+          <div className="center">
+            <Card>
+              <h2>Could not find place!</h2>
+            </Card>
+          </div>
+        );
+      }
+    
+        return(loadedPlace &&  <Update items={loadedPlace}/>);
+            
 }
 export default UpdateProfile;
