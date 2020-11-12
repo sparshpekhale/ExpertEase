@@ -37,8 +37,9 @@ function Users()
           <LoadingSpinner />
         </div>
       )}
-      
+      <div className="main-page">
       {!isLoading && loadedUsers && <Search items={loadedUsers} />}
+      </div>
     </React.Fragment>
   );
   }

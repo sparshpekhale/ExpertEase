@@ -40,7 +40,7 @@ if(isLoggedin)
       <MainNavigation/> 
          <main>
       <Route path="/" exact> 
-          <Users/>
+          <Users className="back"/>
         </Route>
         <Route path="/:userId/profile" exact> 
           <UserProfile/>

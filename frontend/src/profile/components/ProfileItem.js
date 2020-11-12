@@ -17,7 +17,7 @@ function ProfileItem(props)
             <div className="place-item__info">
                 <h2>{props.title}</h2>
                 <h3>University: {props.university}</h3>
-                <p>ABOUT US :{props.descirption}</p>
+                <p>ABOUT :{props.descirption}</p>
                 <p>WORKS : {props.works}</p>
             </div>
             <div className="place-item__action">

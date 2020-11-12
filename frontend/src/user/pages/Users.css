@@ -1,4 +1,6 @@
-
+.main-page{
+  margin-top: 7rem;
+}
 .wrapper{
   display: flex;
 }

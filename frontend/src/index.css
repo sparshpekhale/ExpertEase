@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
-
+body{
+  background-color: #B6B6B6  ;
+}
 /* * {
   box-sizing: border-box;
 }
@@ -35,6 +37,7 @@ body {
 } */
 
 .center {
+
   text-align: center;
   display: flex;
   justify-content: center;

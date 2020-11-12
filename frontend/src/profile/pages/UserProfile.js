@@ -30,7 +30,9 @@ function UserProfile()
     return (
         <React.Fragment>
             <ErrorModal error={error} onClear={clearError}/>
+            <div className="profile">
    {loadedPlaces&&  <PlaceList items={loadedPlaces}/>}
+   </div>
     </React.Fragment>);
 
 }

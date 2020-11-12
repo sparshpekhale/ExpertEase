@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import MainHeader from './MainHeader';
 import {Link} from 'react-router-dom';
-import name from './logo.png';
+import name from './finallogo.png';
 import './MainNavigation.css';
 import NavLinks from './NavLinks';
 import SideDrawer from './SideDrawer';
