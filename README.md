@@ -11,4 +11,4 @@ launch:
 
 Check our website at:
 
-<https://flutter-chat-3eda8.web.app/auth>
+`<https://flutter-chat-3eda8.web.app/auth>`
