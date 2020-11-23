@@ -6,6 +6,7 @@ import sparsh from './sparsh.jpeg'
 import {useParams} from 'react-router-dom';
 import {useHttpClient} from '../../shared/hooks/http-hook';
 import ErrorModal from '../../shared/components/UIElement/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElement/LoadingSpinner';
 /* eslint-disable */
 function UserProfile()
 {const [loadedPlaces,setLoadedPlaces]=useState();
@@ -30,6 +31,11 @@ function UserProfile()
     return (
         <React.Fragment>
             <ErrorModal error={error} onClear={clearError}/>
+            {isLoading && (
+        <div className="center">
+          <LoadingSpinner />
+        </div>
+      )}
             <div className="profile">
    {loadedPlaces&&  <PlaceList items={loadedPlaces}/>}
    </div>

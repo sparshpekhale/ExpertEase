@@ -62,7 +62,9 @@ input {
 }
 
 
-
+.Changer{
+    display: none;
+}
 .container {
     background-color: #ffffff;
     border-radius: 10px;
@@ -204,4 +206,46 @@ input {
         
         
     }
+    .overlay-panel h1
+    {
+
+        display: none;
+
+    }
+    .overlay-panel p
+    {
+
+        display: none;
+
+    }
+   
+    
+    button.btn{
+        transform: rotate(90deg);
+    }
+    
+    .overlay-container{
+        display: none;
+    }
+    .form-container{
+        width: 100%;
+    }
+    .sign-in-container{
+        
+        z-index: 0;
+        opacity: 1;
+        
+        
+    }
+    .sign-up-container{
+            opacity: 1;
+            display: none;
+    }
+   
+    .Changer{
+        display: inline;
+        margin-top: 20px;
+        background-color: black;
+    }
+    
 }

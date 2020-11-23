@@ -9,6 +9,7 @@ import { useHttpClient } from '../../shared/hooks/http-hook.js';
 
 
 function Login() {
+  
     const auth=useContext(AuthContext)
     const name=useRef("what");
     const email=useRef("ksdahfkjh");
@@ -20,6 +21,7 @@ function Login() {
     const nameHandler=(event)=>{inputs.name=event.target.value }
     const universityHandler=(event)=>{inputs.university=event.target.value }
     const[isValid,setisValid]=useState(false);
+    const[showlogin,setshowlogin]=useState(true);
     
     const {isLoading,error,sendRequest,clearError}=useHttpClient();
 
@@ -102,14 +104,22 @@ function Login() {
             name.current.value='';
             email.current.value='';
             password.current.value='';};
+        const logindisplayHandler=(event)=>{
+          event.preventDefault();
+          setshowlogin(true);
+        }
+        const signdisplayHandler=(event)=>{
+          event.preventDefault();
+          setshowlogin(false);
+        }
     return (
         <React.Fragment>
             <ErrorModal error={error} onClear={clearError}/>
         
             <div className='container' id='container' >
             
-            <div className="form-container sign-up-container">
-                <form action="#">
+            <div className="form-container sign-up-container" style={{display: showlogin ? "none" : "inline"}} >
+                <form action="#" className="signupform" >
                     <h1>Create Account</h1>
                     <input ref ={name}type="text" placeholder="Name" onChange={nameHandler}/> 
                    { isValid && <input type="text" placeholder="University/field" onChange={universityHandler}/> }
@@ -120,30 +130,37 @@ function Login() {
                     <input type="radio" id="student" name="user type" value="student" checked={!isValid}  onChange={onstudentHandler} />
                     <label htmlFor="student">Student</label>
                     <button onClick={onSignupHandler}>Register</button>
+                    <button className="Changer" onClick={logindisplayHandler}>Login</button>
                 </form>
             </div>
 
-            <div class="form-container sign-in-container">
+            <div class="form-container sign-in-container" style={{display: showlogin ? "inline" : "none"}} >
                 <form >
                     <h1>Log in</h1>
                     <input type="email" placeholder="Email" onChange={emailHandler} />
                     <input type="password" placeholder="Password" onChange={passwordHandler}/>
                     <a href="#">Forgot your password?</a>
                     <button onClick={onLoginHandler}>Log in</button>
+                    <button className="Changer" onClick={signdisplayHandler}>SignUp</button>
+                    
                 </form>
             </div>
 
-            <div class="overlay-container">
+            <div class="overlay-container" >
+          
                 <div class="overlay">
                     <div class="overlay-panel overlay-left">
                         <h1>EXISTING USER?</h1>
                         <p> Login with your personal info </p>
-                        <button class="btn" id="signIn" >Log in</button>
+                        <button class="btn" id="signIn" onClick={logindisplayHandler}>Log in</button>
                     </div>
+                  
+                   
                     <div class="overlay-panel overlay-right">
                         <h1>NEW USER?</h1>
                         <p>Enter your personal details and start journey with us</p>
-                        <button class="btn" id="signUp" >Sign Up</button>
+                        <button class="btn" id="signUp" onClick={signdisplayHandler}>Sign Up</button>
+                
                     </div>
                 </div>
             </div>
